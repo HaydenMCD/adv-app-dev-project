@@ -1,17 +1,28 @@
 import React from "react";
 import { useAuth } from "../Components/AuthContext";
 import HomepageContent from "../PageContents/HomepageContent";
-import LoadingPage from "./LoadingPage";
 import { useHistory } from "react-router-dom";
-import { loggedin_allowed, routes } from "./routePaths";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-const Homepage = () => {
-  const { loggedIn } = useAuth();
+import LoadingPage from "./LoadingPage";
+import { routes } from "./routePaths";
+
+function Homepage() {
+  const auth = getAuth();
+  const { loggedIn, setLoggedIn } = useAuth();
   const history = useHistory();
 
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
+    }
+  });
+
   return (
-    loggedIn && loggedin_allowed.includes(history.location.pathname) ? <HomepageContent /> : history.replace(routes.LOGIN)
+    {loggedIn===true ? <HomepageContent /> : routeback }
   )
-}
+};
 
 export default Homepage;
