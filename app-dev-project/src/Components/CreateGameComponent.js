@@ -3,20 +3,20 @@ import { Form, Button, Card, Alert } from "react-bootstrap";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../firebase"
 import { getAuth } from 'firebase/auth';
+import { useHistory } from 'react-router-dom';
 
 const CreateGameComponent = () => {
   const nameRef = useRef();
-  const enablePasswordRef = useRef();
   const passwordRef = useRef();
   const auth = getAuth();
   const user = auth.currentUser
+  const history = useHistory();
 
   async function handleSubmit(e) {
     e.preventDefault()
     try {
       const docRef = await addDoc(collection(db, "Games"), {
         gameName: nameRef.current.value,
-        passwordEnabled: enablePasswordRef.current.value,
         password: passwordRef.current.value,
         createdBy: user.displayName,
         joinable: true,
@@ -27,6 +27,7 @@ const CreateGameComponent = () => {
     } catch (e) {
       console.error("Error adding document: ", e);
     }
+    history.replace("/")
   }
 
   return (
@@ -41,13 +42,6 @@ const CreateGameComponent = () => {
             <Form.Label>Game Name:</Form.Label>
             <Form.Control ref={nameRef} required />
           </Form.Group>
-
-          {/*  */}
-          <Form.Group id="password-switch">
-            <Form.Label>Enable Password?</Form.Label>
-            <Form.Check type="switch" ref={enablePasswordRef} />
-          </Form.Group>
-
           <Form.Group id="password">
             <Form.Label>Password:</Form.Label>
             <Form.Control type="password" ref={passwordRef} />
