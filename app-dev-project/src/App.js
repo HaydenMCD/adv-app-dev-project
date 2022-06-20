@@ -8,7 +8,6 @@ import Homepage from "./Routes/Homepage";
 import SignupPage from "./Routes/SignupPage";
 import LoginPage from "./Routes/LoginPage";
 import HowToPlayPage from "./Routes/HowToPlayPage";
-import Error404Page from "./Routes/Error404Page";
 import CreateGamePage from "./Routes/CreateGamePage";
 
 // Components
@@ -42,11 +41,6 @@ const App = () => {
           {/* Route for creating a game */}
           <Route exact path="/create-game">
             <CreateGamePage />
-          </Route>
-
-          {/* Route for the 404 error page */}
-          <Route>
-            <Error404Page />
           </Route>
         </Switch>
     </Router>

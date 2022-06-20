@@ -9,13 +9,13 @@ const Game = ({ game }) => {
   const passwordRef = useRef();
   const [isError, setIsError] = useState(null);
   const history = useHistory();
-  const playerDocs = game.players.forEach((ex) => {
+  game.players.forEach((ex) => {
     playerIds.push(ex);
   });
 
   function joinGame() {
     setIsError(false);
-    if (passwordRef.current.value == game.password) {
+    if (passwordRef.current.value === game.password) {
       setIsError(false);
       console.log("correct password");
       if (playerIds.includes(auth.currentUser.uid)) {
