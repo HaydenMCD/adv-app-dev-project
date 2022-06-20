@@ -1,17 +1,18 @@
 import React from 'react'
-import { useAuth } from "../Components/AuthContext";
 import SignupPageContents from '../PageContents/SignupPageContents';
-import LoadingPage from './LoadingPage';
-import { loggedin_notallowed } from './routePaths';
-import { useHistory } from 'react-router-dom';
+import { auth } from '../firebase';
+
 
 const SignupPage = () => {
-  const { loggedIn } = useAuth()
-  const history = useHistory();
+  const user = auth.currentUser
 
-  return (
-    !loggedIn && loggedin_notallowed.includes(history.location.pathname) && <SignupPageContents />
-  )
+  if (!user) {
+    return (
+      <SignupPageContents />
+    )
+  } else {
+
+  }
 }
 
 export default SignupPage

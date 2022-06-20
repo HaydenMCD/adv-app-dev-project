@@ -1,19 +1,27 @@
-import React from 'react'
+import React, { useState }  from 'react'
 import CreateGameComponent from '../Components/CreateGameComponent'
-import { useAuth } from "../Components/AuthContext";
-import LoadingPage from './LoadingPage';
-import { loggedin_allowed, routes } from './routePaths';
-import { useHistory } from 'react-router-dom';
+import { auth } from '../firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 
 const CreateGamePage = () => {
-  const { loggedIn } = useAuth();
-  const history = useHistory();
+  const [isLoggedIn, setIsLoggedIn] = useState()
+  const user = auth.currentUser
 
-  console.log(loggedIn)
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  });
 
-  return (
-    loggedIn && loggedin_allowed.includes(history.location.pathname) ? <CreateGameComponent /> : history.replace(routes.LOGIN)
-  )
+  if (user) {
+    return (
+      <CreateGameComponent />
+    )
+  } else {
+    //redirect
+  }
 }
 
 export default CreateGamePage

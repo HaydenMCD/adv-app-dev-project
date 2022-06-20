@@ -1,16 +1,17 @@
-import React from 'react'
-import { useHistory } from 'react-router-dom';
-import { useAuth } from '../Components/AuthContext';
-import { routes, loggedin_allowed } from './routePaths';
+import React from 'react';
+import { auth } from '../firebase';
 
 const GamePage = () => {
-  const history = useHistory();
-  const { loggedIn } = useAuth();
-  const history = useHistory();
+  const user = auth.currentUser
 
+
+  if (user) {
     return (
-      loggedIn && loggedin_allowed.includes(history.location.pathname) ? <h2>GamePage</h2> : history.replace(routes.LOGIN)
+      <h2>GamePage</h2>
     )
+  } else {
+    //redirect
+  }
 }
 
 export default GamePage

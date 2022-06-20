@@ -1,28 +1,28 @@
-import React from "react";
-import { useAuth } from "../Components/AuthContext";
+import React, { useState } from "react";
 import HomepageContent from "../PageContents/HomepageContent";
-import { useHistory } from "react-router-dom";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-import LoadingPage from "./LoadingPage";
-import { routes } from "./routePaths";
+import { auth } from "../firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
-function Homepage() {
-  const auth = getAuth();
-  const { loggedIn, setLoggedIn } = useAuth();
-  const history = useHistory();
+const Homepage = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState();
+  const user = auth.currentUser
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      setLoggedIn(true);
+      setIsLoggedIn(true);
     } else {
-      setLoggedIn(false);
+      setIsLoggedIn(false);
     }
   });
 
-  return (
-    {loggedIn===true ? <HomepageContent /> : routeback }
-  )
-};
+  if (user) {
+    return (
+      <HomepageContent />
+    )
+  } else {
+    //redirect
+  }
+}
 
 export default Homepage;

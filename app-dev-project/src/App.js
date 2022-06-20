@@ -2,14 +2,12 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./CSS/App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { AuthProvider } from "./Components/AuthContext";
 
 // Pages
 import Homepage from "./Routes/Homepage";
 import SignupPage from "./Routes/SignupPage";
 import LoginPage from "./Routes/LoginPage";
 import HowToPlayPage from "./Routes/HowToPlayPage";
-import ProfilePage from "./Routes/ProfilePage";
 import Error404Page from "./Routes/Error404Page";
 import CreateGamePage from "./Routes/CreateGamePage";
 
@@ -19,7 +17,6 @@ import Navbar from "./Components/NavbarComponent";
 const App = () => {
   return (
     <Router>
-      <AuthProvider>
         <Navbar />
         <Switch>
           {/* Route for sign up page */}
@@ -42,11 +39,6 @@ const App = () => {
             <HowToPlayPage />
           </Route>
 
-          {/* Route for the user profile page */}
-          <Route exact path="/profile">
-            <ProfilePage />
-          </Route>
-
           {/* Route for creating a game */}
           <Route exact path="/create-game">
             <CreateGamePage />
@@ -57,7 +49,6 @@ const App = () => {
             <Error404Page />
           </Route>
         </Switch>
-      </AuthProvider>
     </Router>
   );
 };

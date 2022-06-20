@@ -1,15 +1,17 @@
-import LoadingPage from './LoadingPage';
-import { useAuth } from "../Components/AuthContext";
-import { useHistory } from "react-router-dom";
-import { loggedin_allowed, routes } from "./routePaths";
+import React from "react";
+import { auth } from "../firebase";
+
 
 const HowToPlayPage = () => {
-  const { loggedIn } = useAuth();
-  const history = useHistory();
+  const user = auth.currentUser
 
-  return (
-    loggedIn && loggedin_allowed.includes(history.location.pathname) ? <div>HowToPlayPage</div> : history.replace(routes.LOGIN)
-  )
+  if (user) {
+    return (
+      <div>HowToPlayPage</div>
+    )
+  } else {
+    //redirect
+  }
 }
 
 export default HowToPlayPage
