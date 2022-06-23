@@ -1,12 +1,16 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, cleanup } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import NavbarComponent from '../../Components/NavbarComponent';
 
+afterEach(() => {
+    cleanup();
+});
 
 test('Should render nav bar not logged in', () => {
+    const isLoggedIn = false
     render(
         <Router>
-            <NavbarComponent />
+            <NavbarComponent isLoggedIn={isLoggedIn}/>
         </Router>
     );
         // Elements
@@ -20,8 +24,7 @@ test('Should render nav bar not logged in', () => {
 });
 
 test('Should render nav bar logged in', () => {
-    const isLoggedIn = {isLoggedIn: true}
-
+    const isLoggedIn = true
     render(
         <Router>
             <NavbarComponent isLoggedIn={isLoggedIn}/>

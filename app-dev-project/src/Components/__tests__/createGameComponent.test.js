@@ -1,11 +1,12 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import { ToggleButton } from 'react-bootstrap';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import CreateGameComponent from '../../Components/CreateGameComponent';
 
+afterEach(() => {
+    cleanup();
+});
 
 test('Should render create game component', () => {
-
     render(
         <Router>
             <CreateGameComponent />
@@ -20,9 +21,10 @@ test('Should render create game component', () => {
         expect(createGameComponentSignup).toHaveTextContent('Game Name:');
         expect(createGameComponentNamePassword).toHaveTextContent('Password:');
         expect(createGameComponentButton).toHaveTextContent('Create Game');
+        expect(createGameComponentButton).toBeEnabled();
 });
 
-test('Can edit create game text inputs', () => {
+test('Can edit create game text inputs and press button', () => {
     const nameInput = "test game";
     const passwordInput = "testpass";
 
@@ -43,4 +45,5 @@ test('Can edit create game text inputs', () => {
 
         expect(createGameComponentNameInput.value).toBe('test game')
         expect(createGameComponentPasswordInput.value).toBe('testpass')
+        expect(createGameComponentButton).toBeEnabled();
 });

@@ -1,7 +1,10 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, cleanup } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import LoginComponent from '../LoginComponent';
 
+afterEach(() => {
+    cleanup();
+});
 
 test('Should render login component', () => {
     render(
@@ -17,19 +20,9 @@ test('Should render login component', () => {
     const loginComponentButton = screen.getByTestId('loginComponent-button');
     const loginComponentSignupText = screen.getByTestId('loginComponent-signupText');
 
-    //Component title
-    expect(loginComponentTitle).toBeInTheDocument();
     expect(loginComponentTitle).toHaveTextContent('Log In');
-    // Component email input
-    expect(loginComponentEmail).toBeInTheDocument();
     expect(loginComponentEmail).toHaveTextContent('Email');
-    // Component password input
-    expect(loginComponentPassword).toBeInTheDocument();
     expect(loginComponentPassword).toHaveTextContent('Password');
-    // Component log in button
-    expect(loginComponentButton).toBeInTheDocument();
     expect(loginComponentButton).toHaveTextContent('Log In');
-    // Component signup text
-    expect(loginComponentSignupText).toBeInTheDocument();
     expect(loginComponentSignupText).toHaveTextContent("Don't have an account? Sign Up");
 });
