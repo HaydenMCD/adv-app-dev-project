@@ -1,8 +1,6 @@
-import { render, screen, cleanup } from '@testing-library/react';
-import { Navbar } from 'react-bootstrap';
+import { render, screen } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import NavbarComponent from '../../Components/NavbarComponent';
-import { getAuth } from "firebase/auth";
 
 
 test('Should render nav bar not logged in', () => {
@@ -21,20 +19,22 @@ test('Should render nav bar not logged in', () => {
         expect(navbarComponentSignup).toHaveTextContent('signup');
 });
 
-test('Should render nav bar logged in',async () => {
+test('Should render nav bar logged in', () => {
     const isLoggedIn = {isLoggedIn: true}
 
-    await render(
+    render(
         <Router>
             <NavbarComponent isLoggedIn={isLoggedIn}/>
         </Router>
     );
 
         // Elements
+        const navbarComponentTitle = screen.getByTestId('navbarComponent-title');
         const navbarComponentGames = screen.getByTestId('navbarComponent-games');
         const navbarComponentCreateGames = screen.getByTestId('navbarComponent-createGames');
         const navbarComponentHow = screen.getByTestId('navbarComponent-how');
 
+        expect(navbarComponentTitle).toHaveTextContent('PokerProject');
         expect(navbarComponentGames).toHaveTextContent('Games');
         expect(navbarComponentCreateGames).toHaveTextContent('Create Game');
         expect(navbarComponentHow).toHaveTextContent('How to play?');
