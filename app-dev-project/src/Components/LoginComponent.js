@@ -12,6 +12,7 @@ const LoginComponent = ({
     setUser,
     setIsLoggedIn,
     setAuthError,
+    auth
 }) => {
     const emailRef = useRef();
     const passwordRef = useRef();
@@ -42,7 +43,7 @@ const LoginComponent = ({
 
     return (
         <>
-            <Card data-testid="loginComponent">
+            <Card>
                 <Card.Body>
                     <h2 className='text-center mb-4' data-testid="loginComponent-title">Log In</h2>
                     {authError && (

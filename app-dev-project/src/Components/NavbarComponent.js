@@ -1,42 +1,30 @@
-import React, { useState } from "react";
+import React from "react";
 import { routes } from "../Routes/routePaths";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import LogoutButton from "./LogoutButton";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-const NavbarComponent = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const auth = getAuth();
-  const user = auth.currentUser
-
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-  });
-
+const NavbarComponent = ({user, isLoggedIn, authError, setUser, setIsLoggedIn, auth}) => {
+  
   return (
-    <Navbar bg="dark" variant="dark">
+    <Navbar bg="dark" variant="dark" >
       <Container>
-        <Navbar.Brand href={routes.HOME}>PokerProject</Navbar.Brand>
-        {user ? (
+        <Navbar.Brand href={routes.HOME} data-testid="navbarComponent-title">PokerProject</Navbar.Brand>
+        {isLoggedIn ? (
           <Navbar.Collapse>
             <Nav className="me-auto">
-              <Nav.Link href={routes.HOME}>Games</Nav.Link>
-              <Nav.Link href={routes.CREATEGAME}>Create Game</Nav.Link>
-              <Nav.Link href={routes.HOWTOPLAY}>How to play?</Nav.Link>
+              <Nav.Link href={routes.HOME} data-testid="navbarComponent-games">Games</Nav.Link>
+              <Nav.Link href={routes.CREATEGAME} data-testid="navbarComponent-createGames">Create Game</Nav.Link>
+              <Nav.Link href={routes.HOWTOPLAY} data-testid="navbarComponent-how">How to play?</Nav.Link>
             </Nav>
-            <Nav>
-              <LogoutButton />
+            <Nav data-testid="navbarComponent-logout">
+            <LogoutButton setUser={setUser} setIsLoggedIn={setIsLoggedIn} auth={auth} />
             </Nav>
           </Navbar.Collapse>
         ) : (
           <Navbar.Collapse>
             <Nav>
-              <Nav.Link href={routes.LOGIN}>login</Nav.Link>
-              <Nav.Link href={routes.SIGNUP}>signup</Nav.Link>
+              <Nav.Link href={routes.LOGIN}  data-testid="navbarComponent-login">login</Nav.Link>
+              <Nav.Link href={routes.SIGNUP}  data-testid="navbarComponent-signup">signup</Nav.Link>
             </Nav>
           </Navbar.Collapse>
             )}

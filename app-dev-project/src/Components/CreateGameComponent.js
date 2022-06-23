@@ -27,8 +27,8 @@ const CreateGameComponent = ({ authError, isLoggedIn, user, auth }) => {
     }
 
     return (
-        <Card className='d-felx align-items-center justify-content-center'>
-            {isLoggedIn ? <Card.Body>
+        <Card className='align-items-center justify-content-center'>
+            <Card.Body>
                 <h2 className='text-center mb-4'>Create a game</h2>
                 {authError && <Alert variant='danger'>{authError}</Alert>}
                 <Form onSubmit={handleSubmit}>
@@ -44,7 +44,7 @@ const CreateGameComponent = ({ authError, isLoggedIn, user, auth }) => {
                         Create Game
                     </Button>
                 </Form>
-            </Card.Body> : <Card.Body> Please Login </Card.Body>}
+            </Card.Body>
         </Card>
     );
 };

@@ -1,15 +1,16 @@
 import React, { useRef, useState } from "react";
 import { doc, updateDoc, arrayUnion, collection } from "firebase/firestore";
-import { auth, db } from "../firebase";
+import { db } from "../firebase";
 import { Form, Alert } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
-const Game = ({ game }) => {
+const Game = ({ game, auth }) => {
   const playerIds = [];
   const playerNames = [];
   const passwordRef = useRef();
   const [isError, setIsError] = useState(null);
   const history = useHistory();
+
   game.players.forEach((player) => {
     playerIds.push(player.uid);
     playerNames.push(player.name)
@@ -53,7 +54,6 @@ const Game = ({ game }) => {
             <div>Players: </div>
             {playerNames.map((playerNames) => {
               return (
-                // Change this to display name.
                 <p key={playerNames}>{playerNames}</p>
               );
             })}

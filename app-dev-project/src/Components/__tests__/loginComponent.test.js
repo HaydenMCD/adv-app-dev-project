@@ -10,16 +10,14 @@ test('Should render login component', () => {
             <LoginComponent />
         </Router>
     );
+    
     // Elements
-    const loginComponent = screen.getByTestId('loginComponent');
     const loginComponentTitle = screen.getByTestId('loginComponent-title');
     const loginComponentEmail = screen.getByTestId('loginComponent-emailInput');
     const loginComponentPassword = screen.getByTestId('loginComponent-passwordInput');
     const loginComponentButton = screen.getByTestId('loginComponent-button');
     const loginComponentSignupText = screen.getByTestId('loginComponent-signupText');
 
-    //Entire component rendered
-    expect(loginComponent).toBeInTheDocument();
     //Component title
     expect(loginComponentTitle).toBeInTheDocument();
     expect(loginComponentTitle).toHaveTextContent('Log In');

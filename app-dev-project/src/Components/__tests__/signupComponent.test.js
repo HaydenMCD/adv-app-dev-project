@@ -11,7 +11,6 @@ test('Should render home page', () => {
     );
 
     // Elements
-    const loginComponent = screen.getByTestId('signupComponent');
     const loginComponentTitle = screen.getByTestId('signupComponent-title');
     const loginComponentEmail = screen.getByTestId('signupComponent-emailInput');
     const loginComponentDisplayName = screen.getByTestId('signupComponent-displayName');
@@ -20,9 +19,6 @@ test('Should render home page', () => {
     const loginComponentButton = screen.getByTestId('signupComponent-button');
     const loginComponentSignupText = screen.getByTestId('signupComponent-loginText');
 
-
-    //Entire component rendered
-    expect(loginComponent).toBeInTheDocument();
     //Component title
     expect(loginComponentTitle).toBeInTheDocument();
     expect(loginComponentTitle).toHaveTextContent('Sign Up');
@@ -38,7 +34,7 @@ test('Should render home page', () => {
     // Component password input
     expect(loginComponentPasswordConf).toBeInTheDocument();
     expect(loginComponentPasswordConf).toHaveTextContent('Confirm password:');
-    // Component log in button
+    // Component log in buttons
     expect(loginComponentButton).toBeInTheDocument();
     expect(loginComponentButton).toHaveTextContent('Sign up');
     // Component signup text
