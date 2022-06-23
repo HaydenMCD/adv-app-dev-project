@@ -61,7 +61,7 @@ const App = () => {
               </Route>
 
               {/* Route for home page */}
-              <Route exact path='/'>
+              <Route exact path='/login'>
                   <LoginPage
                       authError={authError}
                       isLoggedIn={isLoggedIn}
@@ -73,7 +73,7 @@ const App = () => {
               </Route>
 
               {/* Route for the how to play page */}
-              <Route exact path='/home'>
+              <Route exact path='/'>
                   <Homepage
                       authError={authError}
                       isLoggedIn={isLoggedIn}
