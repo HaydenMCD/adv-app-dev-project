@@ -26,7 +26,7 @@ const App = () => {
         setIsLoggedIn(true);
         setUser(user.currentUser);
         setAuthError(null);
-      }else {
+      } else {
         setIsLoggedIn(false);
         setUser(null);
       }

@@ -1,17 +1,26 @@
 import React, { useRef, useState } from "react";
-import { doc, updateDoc, arrayUnion } from "firebase/firestore";
+import { doc, updateDoc, arrayUnion, collection } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { Form, Alert } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
 const Game = ({ game }) => {
   const playerIds = [];
+  const playerNames = [];
   const passwordRef = useRef();
   const [isError, setIsError] = useState(null);
   const history = useHistory();
-  game.players.forEach((ex) => {
-    playerIds.push(ex);
+  game.players.forEach((player) => {
+    playerIds.push(player.uid);
+    playerNames.push(player.name)
   });
+
+  async function addPlayer() {
+    const docRef = await updateDoc(doc(db, 'Games', game.id), { 
+    players: arrayUnion([{uid: auth.currentUser.uid, name: auth.currentUser.displayName }])
+  }, 
+  {merge: true})
+  }
 
   function joinGame() {
     setIsError(false);
@@ -20,15 +29,17 @@ const Game = ({ game }) => {
       console.log("correct password");
       if (playerIds.includes(auth.currentUser.uid)) {
         console.log("User is already in the game");
+        setIsError("You are already in this game")
       } else {
-        updateDoc(doc(db, "Games", game.id), {
-          players: arrayUnion(auth.currentUser.displayName),
-        });
+          addPlayer();
         console.log("User has Joined the game");
         history.replace(`/game/${game.id}`)
       }
+    } else if (passwordRef.current.value === "") {
+      setIsError("Password empty");
+      console.log(isError)
     } else {
-      setIsError("incorrect password");
+      setIsError("Incorrect password");
       console.log(isError)
     }
   }
@@ -40,10 +51,10 @@ const Game = ({ game }) => {
           <div className="gameName">{game.gameName}</div>
           <div className="gamePlayers">
             <div>Players: </div>
-            {playerIds.map((playerId) => {
+            {playerNames.map((playerNames) => {
               return (
                 // Change this to display name.
-                <p key={playerId}>{playerId}</p>
+                <p key={playerNames}>{playerNames}</p>
               );
             })}
           </div>

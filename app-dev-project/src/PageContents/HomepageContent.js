@@ -3,10 +3,13 @@ import { collection, getDocs, query } from 'firebase/firestore'
 import { db } from '../firebase'
 import Game from '../Components/Game';
 import LoadingPage from "../Routes/LoadingPage"
+import { useHistory } from 'react-router-dom';
 
-const HomepageContent = ({authError, isLoggedIn, user, auth}) => {
+const HomepageContent = ({ authError, isLoggedIn, user, auth }) => {
     const [games, setGames] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const history = useHistory();
+
 
     const getGame = useCallback(async () => {
         let gamesArray = [];
@@ -31,9 +34,7 @@ const HomepageContent = ({authError, isLoggedIn, user, auth}) => {
 
     return (
         <>
-            {isLoading ? (
-                <LoadingPage />
-            ) : (
+            {!isLoading && isLoggedIn ? (
                 <div className='container'>
                     <div className='gameContainer'>
                         {games.map((game, index) => {
@@ -41,6 +42,8 @@ const HomepageContent = ({authError, isLoggedIn, user, auth}) => {
                         })}
                     </div>
                 </div>
+            ) : (
+                <LoadingPage />
             )}
         </>
     );

@@ -15,10 +15,10 @@ const CreateGameComponent = ({ authError, isLoggedIn, user, auth }) => {
             const docRef = await addDoc(collection(db, 'Games'), {
                 gameName: nameRef.current.value,
                 password: passwordRef.current.value,
-                createdBy: user.displayName,
+                createdBy: auth.currentUser.displayName,
                 joinable: true,
                 gameOver: false,
-                players: [user.displayName],
+                players: [{uid: auth.currentUser.uid, Displayname: auth.currentUser.displayName }]
             });
             console.log('Document written with ID: ', docRef.id);
         } catch (e) {
