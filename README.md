@@ -9,6 +9,7 @@ https://h-mcd-project.web.app/
 5. Finally, type `npm start` to start a local deployment. This will automatically open the app in a web browser.
 
 ## Security Rules:
+```
 service cloud.firestore {
   match /databases/{database}/documents {
     match /{document=**} {
@@ -16,3 +17,4 @@ service cloud.firestore {
     }
   }
 }
+```
