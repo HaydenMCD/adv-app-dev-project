@@ -16,12 +16,9 @@ const Game = ({ game, auth }) => {
     playerNames.push(player.Displayname)
   });
 
-  console.log(playerNames)
-  console.log(playerIds)
-
   async function addPlayer() {
     const docRef = await updateDoc(doc(db, 'Games', game.id), { 
-    players: arrayUnion([{uid: auth.currentUser.uid, name: auth.currentUser.displayName }])
+    players: [{uid: auth.currentUser.uid, Displayname: auth.currentUser.displayName }]
   }, 
   {merge: true})
   }
