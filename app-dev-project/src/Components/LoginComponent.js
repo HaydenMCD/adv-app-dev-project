@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { routes } from '../Routes/routePaths';
@@ -12,13 +12,15 @@ const LoginComponent = ({
     setUser,
     setIsLoggedIn,
     setAuthError,
-    auth
+    auth,
 }) => {
     const emailRef = useRef();
     const passwordRef = useRef();
     const history = useHistory();
+    const [isLoading, setIsLoading] = useState(false);
 
     async function handleSubmit(e) {
+        setIsLoading(true)
         e.preventDefault();
         await signInWithEmailAndPassword(
             auth,
@@ -29,8 +31,10 @@ const LoginComponent = ({
                 setUser(User.user);
                 setIsLoggedIn(true);
                 if (isLoggedIn) {
+                    setIsLoading(false)
                     history.replace(routes.HOME);
                 } else {
+                    setIsLoading(false)
                     throw new Error('User is not logged in');
                 }
             })
@@ -67,7 +71,7 @@ const LoginComponent = ({
                                 data-testid="loginComponent-passwordInput"
                             />
                         </Form.Group>
-                        <Button className='w-100' type='submit' data-testid="loginComponent-button">
+                        <Button disabled={isLoading} className='w-100' type='submit' data-testid="loginComponent-button">
                             Log In
                         </Button>
                     </Form>

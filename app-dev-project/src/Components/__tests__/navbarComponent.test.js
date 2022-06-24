@@ -6,7 +6,7 @@ afterEach(() => {
     cleanup();
 });
 
-test('Should render nav bar not logged in', () => {
+test('Should render nav bar not logged out', () => {
     const isLoggedIn = false
     render(
         <Router>
@@ -23,7 +23,7 @@ test('Should render nav bar not logged in', () => {
         expect(navbarComponentSignup).toHaveTextContent('signup');
 });
 
-test('Can edit login page text inputs', () => {
+test('Should render nav bar not logged in', () => {
     const isLoggedIn = true
     render(
         <Router>

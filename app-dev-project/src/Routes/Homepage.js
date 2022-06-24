@@ -6,6 +6,8 @@ const Homepage = ({
     isLoggedIn,
     user,
     auth,
+    isLoading,
+    setIsLoading,
 }) => {
     return (
         <HomepageContent

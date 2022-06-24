@@ -4,14 +4,16 @@ import { collection, addDoc, setDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
 import { useHistory } from "react-router-dom";
 
-const CreateGameComponent = ({ authError, isLoggedIn, user, auth }) => {
+const CreateGameComponent = ({ authError, auth }) => {
     const nameRef = useRef();
     const passwordRef = useRef();
     const history = useHistory();
     const [gameCreated, setGameCreated] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const gameName = "";
 
     async function handleSubmit(e, game) {
+        setIsLoading(true)
         setGameCreated("Game is being created... please wait")
         e.preventDefault();
 
@@ -27,7 +29,8 @@ const CreateGameComponent = ({ authError, isLoggedIn, user, auth }) => {
             name: auth.currentUser.displayName,
             uid: auth.currentUser.uid,
         });
-        history.replace('/')
+        setIsLoading(false)
+        history.replace(`/game/${game.id}`)
     }
 
     return (
@@ -45,7 +48,7 @@ const CreateGameComponent = ({ authError, isLoggedIn, user, auth }) => {
                         <Form.Control type='password' ref={passwordRef} data-testid="createGameComponent-passwordInput"/>
                     </Form.Group>
                     {gameCreated && <Alert variant='info'>{gameCreated}</Alert>}
-                    <Button className='w-100' type='submit' data-testid="createGameComponent-button">
+                    <Button disabled={isLoading} className='w-100' type='submit' data-testid="createGameComponent-button">
                         Create Game
                     </Button>
                 </Form>

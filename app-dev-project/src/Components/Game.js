@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { doc, updateDoc, collection, onSnapshot, setDoc, addDoc } from "firebase/firestore";
+import { doc, collection, onSnapshot, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { Form, Alert } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
@@ -9,7 +9,6 @@ const Game = ({ game, auth }) => {
   const [isError, setIsError] = useState(null);
   const history = useHistory();
   const [players, setPlayers] = useState([]);
-  const playerIDs = [];
   const playersArray = [];
 
   const playerRef = collection(db, 'Games', game.id, 'players');

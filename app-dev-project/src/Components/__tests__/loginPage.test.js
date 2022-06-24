@@ -6,7 +6,7 @@ afterEach(() => {
     cleanup();
 });
 
-test('Should render login component', () => {
+test('Should render login components', () => {
     render(
         <Router>
             <LoginPage />
@@ -28,7 +28,7 @@ test('Should render login component', () => {
 });
 
 
-test('Should render login component', () => {
+test('Can edit login text inputs', () => {
     const emailInput = "test@gmail.com";
     const passwordInput = "testpass";
     render(

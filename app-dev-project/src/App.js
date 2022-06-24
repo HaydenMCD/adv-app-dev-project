@@ -11,101 +11,124 @@ import SignupPage from "./Routes/SignupPage";
 import LoginPage from "./Routes/LoginPage";
 import HowToPlayPage from "./Routes/HowToPlayPage";
 import CreateGamePage from "./Routes/CreateGamePage";
+import GamePage from './Routes/GamePage';
 
 // Components
 import Navbar from "./Components/NavbarComponent";
 
 const App = () => {
-  const [user, setUser] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [authError, setAuthError] = useState(null);
+    const [user, setUser] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [authError, setAuthError] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
-  try {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setIsLoggedIn(true);
-        setUser(user.currentUser);
-        setAuthError(null);
-      } else {
-        setIsLoggedIn(false);
+    try {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setIsLoggedIn(true);
+                setUser(user.currentUser);
+                setAuthError(null);
+            } else {
+                setIsLoggedIn(false);
+                setUser(null);
+            }
+        });
+    } catch (error) {
         setUser(null);
-      }
-    });
-  } catch (error) {
-    setUser(null);
-    setIsLoggedIn(false);
-    setAuthError(error.message);
-  }
+        setIsLoggedIn(false);
+        setAuthError(error.message);
+    }
 
-  return (
-      <Router>
-           <Navbar
-              authError={authError}
-              isLoggedIn={isLoggedIn}
-              auth={auth}
-              user={user}
-              setUser={setUser}
-              setIsLoggedIn={setIsLoggedIn}
-          />
-          <Switch>
-              {/* Route for sign up page */}
-              <Route exact path='/signup'>
-              {isLoggedIn === true ? <Redirect to="/" /> : null}
-                  <SignupPage
-                      authError={authError}
-                      isLoggedIn={isLoggedIn}
-                      setUser={setUser}
-                      setIsLoggedIn={setIsLoggedIn}
-                      setAuthError={setAuthError}
-                      auth={auth}
-                  />
-              </Route>
+    return (
+        <Router>
+            <Navbar
+                authError={authError}
+                isLoggedIn={isLoggedIn}
+                auth={auth}
+                user={user}
+                setUser={setUser}
+                setIsLoggedIn={setIsLoggedIn}
+            />
+            <Switch>
+                {/* Route for sign up page */}
+                <Route exact path='/signup'>
+                    {isLoggedIn === true ? <Redirect to="/" /> : null}
+                    <SignupPage
+                        authError={authError}
+                        isLoggedIn={isLoggedIn}
+                        setUser={setUser}
+                        setIsLoggedIn={setIsLoggedIn}
+                        setAuthError={setAuthError}
+                        auth={auth}
+                        isLoading={isLoading}
+                        setIsLoading={setIsLoading}
+                    />
+                </Route>
 
-              {/* Route for home page */}
-              <Route exact path='/login'>
-              {isLoggedIn === true ? <Redirect to="/" /> : null}
-                  <LoginPage
-                      authError={authError}
-                      isLoggedIn={isLoggedIn}
-                      setUser={setUser}
-                      setIsLoggedIn={setIsLoggedIn}
-                      setAuthError={setAuthError}
-                      auth={auth}
-                  />
-              </Route>
+                {/* Route for home page */}
+                <Route exact path='/login'>
+                    {isLoggedIn === true ? <Redirect to="/" /> : null}
+                    <LoginPage
+                        authError={authError}
+                        isLoggedIn={isLoggedIn}
+                        setUser={setUser}
+                        setIsLoggedIn={setIsLoggedIn}
+                        setAuthError={setAuthError}
+                        auth={auth}
+                        isLoading={isLoading}
+                        setIsLoading={setIsLoading}
+                    />
+                </Route>
 
-              {/* Route for the how to play page */}
-              <Route exact path='/'>
-                  <Homepage
-                      authError={authError}
-                      isLoggedIn={isLoggedIn}
-                      user={user}
-                      auth={auth}
-                  />
-              </Route>
+                {/* Route for the how to play page */}
+                <Route exact path='/'>
+                    <Homepage
+                        authError={authError}
+                        isLoggedIn={isLoggedIn}
+                        user={user}
+                        auth={auth}
+                        isLoading={isLoading}
+                        setIsLoading={setIsLoading}
+                    />
+                </Route>
 
-              {/* Route for log in page */}
-              <Route exact path='/how'>
-                  <HowToPlayPage
-                      authError={authError}
-                      isLoggedIn={isLoggedIn}
-                      user={user}
-                      auth={auth}
-                  />
-              </Route>
+                {/* Route for log in page */}
+                <Route exact path='/how'>
+                    <HowToPlayPage
+                        authError={authError}
+                        isLoggedIn={isLoggedIn}
+                        user={user}
+                        auth={auth}
+                        isLoading={isLoading}
+                        setIsLoading={setIsLoading}
+                    />
+                </Route>
 
-              {/* Route for creating a game */}
-              <Route exact path='/create-game'>
-                  <CreateGamePage
-                      authError={authError}
-                      isLoggedIn={isLoggedIn}
-                      user={user}
-                      auth={auth}
-                  />
-              </Route>
-          </Switch>
-      </Router>
-  );
+                {/* Route for creating a game */}
+                <Route exact path='/create-game'>
+                    <CreateGamePage
+                        authError={authError}
+                        isLoggedIn={isLoggedIn}
+                        user={user}
+                        auth={auth}
+                        isLoading={isLoading}
+                        setIsLoading={setIsLoading}
+                    />
+                </Route>
+
+                <Route path="/game/:gameId">
+                    <GamePage
+                        authError={authError}
+                        isLoggedIn={isLoggedIn}
+                        user={user}
+                        auth={auth}
+                        isLoading={isLoading}
+                        setIsLoading={setIsLoading}
+                    />
+                </Route>
+            </Switch>
+        </Router>
+    );
 };
 
 export default App;
