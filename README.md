@@ -1,4 +1,5 @@
-## Deloyed app: https://h-mcd-project.web.app/
+## Deployed app: 
+https://h-mcd-project.web.app/
 
 ## How to run locally
 1. Open git and type `git clone https://github.com/BIT-Advanced-App-Dev/project-22s1-Hayden-McD.git`
