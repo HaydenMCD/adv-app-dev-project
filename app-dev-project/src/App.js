@@ -1,7 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./CSS/App.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import { auth } from './firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useState } from 'react';
@@ -50,6 +50,7 @@ const App = () => {
           <Switch>
               {/* Route for sign up page */}
               <Route exact path='/signup'>
+              {isLoggedIn === true ? <Redirect to="/" /> : null}
                   <SignupPage
                       authError={authError}
                       isLoggedIn={isLoggedIn}
@@ -62,6 +63,7 @@ const App = () => {
 
               {/* Route for home page */}
               <Route exact path='/login'>
+              {isLoggedIn === true ? <Redirect to="/" /> : null}
                   <LoginPage
                       authError={authError}
                       isLoggedIn={isLoggedIn}
